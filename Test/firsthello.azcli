@@ -1,0 +1,23 @@
+az group create --name "TestGroup" --location "southeastasia"
+
+az network vnet show --resource-group "TestGroup" –-name "TestVNET"
+
+az network vnet create --resource-group "TestGroup" --name "TestVNET" --location "southeastasia"
+
+az network vnet subnet create --resource-group "TestGroup" --vnet-name "TestVNET" --name "TestSubnet" --address-prefix 10.0.1.0/24
+
+az network public-ip create --resource-group "TestGroup" --name "TestPIP" --location "southeastasia" --allocation-method "Dynamic"
+
+az network public-ip update --resource-group "TestGroup" --name "TestPIP" --dns-name "test-shane-singtel"
+
+az network nic create --resource-group "TestGroup" --location "southeastasia" --name "TestNIC" --subnet "TestSubnet" --vnet-name "TestVNET" --public-ip-address "TestPIP"
+
+az vm image list-publishers --location "southeastasia"
+
+az vm image list-offers --location "southeastasia" --publisher "MicrosoftWindowsServer"
+
+az vm image list-skus --location "southeastasia" --publisher "MicrosoftWindowsServer" --offer "WindowsServer"
+
+az vm image list --location "southeastasia" --publisher "MicrosoftWindowsServer" --offer "WindowsServer" --sku "2016-Datacenter" --all
+
+az vm create --resource-group "TestGroup" --name "TestVM" --location "southeastasia" --nics "TestNIC" --image MicrosoftWindowsServer:WindowsServer:2016-Datacenter:2016.0.20170127 --admin-username "skycotton" --admin-password "#1AzurePro$"
