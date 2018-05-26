@@ -20,4 +20,6 @@ az vm image list-skus --location "southeastasia" --publisher "MicrosoftWindowsSe
 
 az vm image list --location "southeastasia" --publisher "MicrosoftWindowsServer" --offer "WindowsServer" --sku "2016-Datacenter" --all
 
-az vm create --resource-group "TestGroup" --name "TestVM" --location "southeastasia" --nics "TestNIC" --image MicrosoftWindowsServer:WindowsServer:2016-Datacenter:2016.0.20170127 --admin-username "skycotton" --admin-password "#1AzurePro$"
+az vm create --resource-group "TestGroup" --name "TestVM" --location "southeastasia" --nics "TestNIC" --image MicrosoftWindowsServer:WindowsServer:2016-Datacenter:2016.127.20170406 --admin-username "skycotton" --admin-password "#1Azure|Pro$"
+
+az group delete –-name "TestGroup"
