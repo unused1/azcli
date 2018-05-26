@@ -51,12 +51,24 @@ az vm image list --location "southeastasia" --publisher "MicrosoftWindowsServer"
 
 az vm create --resource-group "TestGroup" --name "TestVM" --location "southeastasia" \
  --nics "TestNIC" --image MicrosoftWindowsServer:WindowsServer:2016-Datacenter:2016.127.20170406 
- --admin-username "skycotton" --admin-password #1Azure|Pro$
+ --admin-username "skycotton"
+
+
+az vm create \
+    --resource-group TestGroup \
+    --name TestVM\
+    --location southeastasia \
+    --nics TestNIC \
+    --image UbuntuLTS \
+    --admin-username skycotton \
+    --ssh-key-value @id_rsa.pub
 
 az vm show --resource-group "TestGroup" --name "TestVM"
 
 az network public-ip show --resource-group "TestGroup" --name "TestPIP"
 az network public-ip show --resource-group "TestGroup" --name "TestPIP" --query dnsSettings.fqdn
+
+ssh -l skycotton test-shane-singtel.southeastasia.cloudapp.azure.com
 
 
 az group delete --name "TestGroup"
