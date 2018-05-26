@@ -1,10 +1,39 @@
 az group create --name "TestGroup" --location "southeastasia"
 
-az network vnet show --resource-group "TestGroup" –-name "TestVNET"
+az network nsg create --resource-group "TestGroup" --name "TestNSG" --location "southeastasia"
+
+az network nsg rule create \
+  --resource-group "TestGroup" \
+  --nsg-name "TestNSG" \
+  --name Allow-RDP-All \
+  --access Allow \
+  --protocol "*" \
+  --direction Inbound \
+  --priority 1000 \
+  --source-address-prefix Internet \
+  --source-port-range "*" \
+  --destination-address-prefixes "*" \
+  --destination-port-range 3389
+
+az network nsg rule create \
+  --resource-group "TestGroup" \
+  --nsg-name "TestNSG" \
+  --name Allow-SSH-All \
+  --access Allow \
+  --protocol TCP \
+  --direction Inbound \
+  --priority 1001 \
+  --source-address-prefix Internet \
+  --source-port-range "*" \
+  --destination-address-prefixes "*" \
+  --destination-port-range 22
+
 
 az network vnet create --resource-group "TestGroup" --name "TestVNET" --location "southeastasia"
 
-az network vnet subnet create --resource-group "TestGroup" --vnet-name "TestVNET" --name "TestSubnet" --address-prefix 10.0.1.0/24
+az network vnet show --resource-group "TestGroup" –-name "TestVNET"
+
+az network vnet subnet create --resource-group "TestGroup" --vnet-name "TestVNET" --name "TestSubnet" --address-prefix 10.0.1.0/24 --network-security-group "TestNSG"
 
 az network public-ip create --resource-group "TestGroup" --name "TestPIP" --location "southeastasia" --allocation-method "Dynamic"
 
@@ -20,14 +49,14 @@ az vm image list-skus --location "southeastasia" --publisher "MicrosoftWindowsSe
 
 az vm image list --location "southeastasia" --publisher "MicrosoftWindowsServer" --offer "WindowsServer" --sku "2016-Datacenter" --all
 
-az vm create --resource-group "TestGroup" --name "TestVM" --location "southeastasia" --nics "TestNIC" --image MicrosoftWindowsServer:WindowsServer:2016-Datacenter:2016.127.20170406 --admin-username "skycotton" --admin-password "#1Azure|Pro$"
+az vm create --resource-group "TestGroup" --name "TestVM" --location "southeastasia" \
+ --nics "TestNIC" --image MicrosoftWindowsServer:WindowsServer:2016-Datacenter:2016.127.20170406 
+ --admin-username "skycotton" --admin-password #1Azure|Pro$
 
 az vm show --resource-group "TestGroup" --name "TestVM"
 
 az network public-ip show --resource-group "TestGroup" --name "TestPIP"
 az network public-ip show --resource-group "TestGroup" --name "TestPIP" --query dnsSettings.fqdn
 
-
-az network nsg create --resource-group "TestGroup" --name "TestNSG" --location "southeastasia" 
 
 az group delete --name "TestGroup"
