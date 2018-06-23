@@ -72,3 +72,5 @@ ssh -l skycotton test-shane-singtel.southeastasia.cloudapp.azure.com
 
 
 az group delete --name "TestGroup"
+
+

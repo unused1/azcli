@@ -1,0 +1,11 @@
+
+az group create --name MOD05APPS --location eastus
+az group create --name MOD05FUNC --location eastus
+
+az appservice plan create --is-linux --name HostedServicePlan --resource-group MOD05APPS --location eastus --sku B2
+az appservice plan create --name HostedServicePlan --resource-group MOD05APPS --location eastus --sku B2
+
+az webapp list-runtimes
+
+az webapp create --name shanewebapp --plan HostedServicePlan --resource-group MOD05APPS --runtime "aspnet|v4.7"
+
