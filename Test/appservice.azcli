@@ -9,3 +9,10 @@ az webapp list-runtimes
 
 az webapp create --name shanewebapp --plan HostedServicePlan --resource-group MOD05APPS --runtime "aspnet|v4.7"
 
+az webapp create --name shanegitapp --plan HostedServicePlan --resource-group MOD05APPS --runtime "node|8.1"
+
+az webapp create --name shanedocker --plan HostedServicePlan --resource-group MOD05APPS --deployment-container-image ghost
+
+az group delete --name MOD05APPS --no-wait --yes
+
+az group delete --name MOD05FUNC --no-wait --yes
